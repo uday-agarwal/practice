@@ -4,7 +4,7 @@ Can insert at the end, remove at the beginning, implemented circularly.
 Does not support insertion or removal from the middle.
 Overflow or underflow will raise an error.
 """
-QUEUE_SIZE = 5
+QUEUE_SIZE = 10
 
 class Queue:
     def __init__(self, capacity: int):
@@ -42,46 +42,14 @@ class Queue:
 
 def main():
     que = Queue(QUEUE_SIZE)
-    que.enqueue(10)
-    print(que)
-    que.enqueue(7)
-    print(que)
-    que.enqueue(65)
-    print(que)
-    que.enqueue(34)
-    print(que)
-    que.dequeue()
-    print(que)
-    que.enqueue(98)
-    print(que)
-    que.dequeue()
-    print(que)
-    que.enqueue(13)
-    print(que)
-    que.enqueue(56)
-    print(que)
-    que.enqueue(99)
-    print(que)
-    que.dequeue()
-    print(que)
-    que.dequeue()
-    print(que)
-    que.dequeue()
-    print(que)
-    que.dequeue()
-    print(que)
-    que.dequeue()
-    print(que)
-    que.enqueue(120)
-    print(que)
-    que.enqueue(2342)
-    print(que)
-    que.enqueue(4535)
-    print(que)
-    que.enqueue(343)
-    print(que)
-    que.enqueue(109)
-    print(que)
+
+    items = [10, 7, 65, 34, None, 98, None, 13, 56, 99, None, None, None, None, None, None, 120, 2342, 4535, 343, 109]
+    for item in items:
+        if item:
+            que.enqueue(item)
+        else:
+            que.dequeue()
+        print(que)
 
 if __name__ == '__main__':
     main()

@@ -37,11 +37,12 @@ class MinHeap:
             return
 
         index = len(data) - 1
-        while (index - 1) // 2 >= 0:
-            parent = (index - 1) // 2
+        parent = (index - 1) // 2
+        while parent >= 0:
             if data[parent] > data[index]:
                 data[index], data[parent] = data[parent], data[index]
                 index = parent
+                parent = (index - 1) // 2
             else:
                 return
             # print(data)
@@ -69,7 +70,12 @@ class MinHeap:
             index = swap_with
             # print(data)
 
+    @staticmethod
     def insert(self, data: int):
+        pass
+
+    @staticmethod
+    def pop_min(self, data: List):
         pass
 
     def __str__(self):
