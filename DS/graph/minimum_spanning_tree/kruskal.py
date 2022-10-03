@@ -2,9 +2,16 @@
 
 Algorithm:
  - Sort all edges
- - Pick the lowest edge and check if it is not forming a cycle
- - Insert into final graph.
+ - Pick the lowest edge and check if find(vertice 1) != find(vertice 2)
+ - Perform union of those two vertices.
+ - Insert edge into final graph (which would be the MST)
  - Repeat
+
+Complexity:
+ - Compiling all edges: O(E)
+ - Sorting edges: O(E logE)
+ - Constructing the MST: O(E alpha(V)) = ~O(E)
+ - Overall = O(E logE)
 
 Input:
 A---5---B--6--F 
@@ -79,26 +86,26 @@ class Graph:
             'F': [('B', 6), ('D', 7)]
         }
 
-    def find_edges(self) -> List[Tuple[int, Tuple[str, str]]]:
+    def find_edges(self) -> List[Tuple[Tuple[str, str], int]]:
         # Key: Tuple(A, B)
         # Value: weight
         edges = dict()
-        sorted_edges = []
 
         for node, neighbors in self.adj_list.items():
             for neighbor in neighbors:
                 edge1 = (node, neighbor[0])
                 edge2 = (neighbor[0], node)
                 if edge1 not in edges and edge2 not in edges:
-                    edges[node, neighbor[0]] = neighbor[1]
-                    sorted_edges.append((neighbor[1], (node, neighbor[0])))
+                    edges[edge1] = neighbor[1]
 
-        sorted_edges.sort()
+        # Sorting dictionary by value
+        sorted_edges = sorted(edges.items(), key=lambda item: item[1])
+        print('Sorted edges:', sorted_edges)
         return sorted_edges
 
     def generate_mst(self) -> None:
         sorted_edges = self.find_edges()
-        total_edges_taken = 0
+        mst_edge_count = 0
 
         self.mst = {}
 
@@ -109,8 +116,8 @@ class Graph:
 
         # For each edge seen, find and union these sets
         for edge in sorted_edges:
-            weight = edge[0]
-            nodes = edge[1]
+            nodes = edge[0]
+            weight = edge[1]
             if dj.find(nodes[0]) != dj.find(nodes[1]):
                 dj.union(nodes[0], nodes[1])
                 if nodes[0] not in self.mst:
@@ -121,9 +128,9 @@ class Graph:
                     self.mst[nodes[1]] = {nodes[0]: weight}
                 else:
                     self.mst[nodes[1]] |= {nodes[0]: weight}
-                total_edges_taken += 1
+                mst_edge_count += 1
 
-            if total_edges_taken == len(self.adj_list) - 1:
+            if mst_edge_count == len(self.adj_list) - 1:
                 break
 
     def __str__(self) -> str:
