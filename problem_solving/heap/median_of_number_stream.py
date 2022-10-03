@@ -23,7 +23,6 @@ class Median:
     def __init__(self) -> None:
         self.left = []   # Max heap
         self.right = []  # Min heap
-        self.insert_left = True
         self.median = None
 
     def add_num(self, i: int) -> None:
