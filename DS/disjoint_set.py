@@ -38,7 +38,7 @@ class DisjointSet:
         if leader_of_x == leader_of_y:
             return
 
-        if self.ranks[x] > self.ranks[y]:
+        if self.ranks[leader_of_x] > self.ranks[leader_of_y]:
             leader_of_y, leader_of_x = leader_of_x, leader_of_y
         
         # X has lower rank than Y
@@ -47,6 +47,7 @@ class DisjointSet:
         # Update rank of the expanded set
         self.ranks[leader_of_y] = self.ranks[leader_of_x] + \
                                   self.ranks[leader_of_y]
+        self.ranks[leader_of_x] = 0
         self.total_sets -= 1
 
     def find(self, element: int) -> int:

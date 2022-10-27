@@ -1,11 +1,13 @@
 """Kruskal uses Disjoint Set (union find) DS.
 
 Algorithm:
- - Sort all edges
+ - Sort all edges by their weight
+ - Initialize a disjoint set - one set for each vertex
+ - Initialize a selected_edge_count = 0
  - Pick the lowest edge and check if find(vertice 1) != find(vertice 2)
  - Perform union of those two vertices.
  - Insert edge into final graph (which would be the MST)
- - Repeat
+ - Repeat until N-1 edges picked
 
 Complexity:
  - Compiling all edges: O(E)
@@ -51,7 +53,7 @@ class DisjointSet:
         if leader_of_x == leader_of_y:
             return
 
-        if self.ranks[x] > self.ranks[y]:
+        if self.ranks[leader_of_x] > self.ranks[leader_of_y]:
             leader_of_y, leader_of_x = leader_of_x, leader_of_y
         
         # X has lower rank than Y
@@ -60,6 +62,8 @@ class DisjointSet:
         # Update rank of the expanded set
         self.ranks[leader_of_y] = self.ranks[leader_of_x] + \
                                   self.ranks[leader_of_y]
+        self.ranks[leader_of_x] = 0
+        print(self.ranks)
 
     def find(self, element: str) -> str:
         """Find the leader of an element 
@@ -107,6 +111,8 @@ class Graph:
         sorted_edges = self.find_edges()
         mst_edge_count = 0
 
+        # Key: Vertex
+        # Value: Map of (Key: Neighbor Vertex, Value: Edge Weight)
         self.mst = {}
 
         # Create a new disjoint set
@@ -119,7 +125,11 @@ class Graph:
             nodes = edge[0]
             weight = edge[1]
             if dj.find(nodes[0]) != dj.find(nodes[1]):
+                # These two vertices aren't yet connected (directly or indirectly)
+                # First do a union of both sets
                 dj.union(nodes[0], nodes[1])
+
+                # Insert both vertices in the MST's adjacency list
                 if nodes[0] not in self.mst:
                     self.mst[nodes[0]] = {nodes[1]: weight}
                 else:

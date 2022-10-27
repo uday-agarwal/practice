@@ -25,10 +25,12 @@ class MaxHeapInt(int):
 def find_kth_number(arr: List, k: int) -> int:
     max_heap = [MaxHeapInt(i) for i in arr[0:k]]
     heapify(max_heap)
+    print(max_heap)
 
     for item in arr[k:]:
-        if item > max_heap[0]:
+        if item < int(max_heap[0]):
             heappushpop(max_heap, MaxHeapInt(item))
+        print(max_heap)
 
     return max_heap[0]
 

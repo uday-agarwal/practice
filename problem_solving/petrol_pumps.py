@@ -9,7 +9,7 @@ def optimalPoint(magic, dist):
 
         if left_index >= len(magic):
             return -1
-            
+
         sum += magic[right_index] - dist[right_index]
         if sum < 0:
             if left_index > right_index:

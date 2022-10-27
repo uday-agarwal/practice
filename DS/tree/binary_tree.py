@@ -65,7 +65,6 @@ class BinaryTree:
         queue.append(None)
         while queue:
             node = queue.popleft()
-            if node: print(node.data, end=' ')
             if not node:
                 if queue:
                     queue.append(None)
