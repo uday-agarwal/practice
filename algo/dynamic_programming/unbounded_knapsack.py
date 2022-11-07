@@ -5,10 +5,14 @@ Input: weights=[2, 3, 2, 4], values=[6, 8, 4, 14], capacity=6
 Output: 20
 
 Approach:
+ - Start with capacity = 0
+ - For each capacity, run through all the items
+    - If the capacity >= weight of an item, check if item's value + (capacity - weight)'s value > capacity's current value
+        - If yes, update
 
-
-Complexity:
-
+Complexity: 
+    Time: O(N * C) where N = number of items, C = capacity of knapsack
+    Space: O(C) for storing each capacity's max value
 
 """
 
