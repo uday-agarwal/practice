@@ -1,8 +1,6 @@
 package com.practice;
 
 import com.practice.designpatterns.DesignPatterns;
-import com.practice.designpatterns.singleton.SingletonSingleThreaded;
-import com.practice.ds.DSMain;
 
 public class Main {
   private static void cacheTest() {
