@@ -10,7 +10,11 @@ public class SingletonSingleThreaded {
   // Lazy initialization.
   private static SingletonSingleThreaded instance;
 
+  // Other fields
+  private String property;
+
   private SingletonSingleThreaded() {
+    property = "This is a Singleton";
   }
 
   // Works only for a single thread.
@@ -20,5 +24,9 @@ public class SingletonSingleThreaded {
     }
 
     return instance;
+  }
+
+  public String getProperty() {
+    return property;
   }
 }
