@@ -1,5 +1,12 @@
 package com.practice.designpatterns;
 
+import com.practice.designpatterns.builder.Response;
+import com.practice.designpatterns.command.Command;
+import com.practice.designpatterns.command.Light;
+import com.practice.designpatterns.command.LightOnCommand;
+import com.practice.designpatterns.command.MacroCommand;
+import com.practice.designpatterns.command.Stereo;
+import com.practice.designpatterns.command.StereoOnCommand;
 import com.practice.designpatterns.factory.AveragePluginFactory;
 import com.practice.designpatterns.factory.GreatPluginFactory;
 import com.practice.designpatterns.factory.Plugin;
@@ -19,7 +26,11 @@ public class DesignPatterns {
     // factoryClient(new AveragePluginFactory(), PluginType.NEW_PLUGIN);
     // factoryClient(new GreatPluginFactory(), PluginType.NEW_PLUGIN);
 
-    observerClient();
+    // observerClient();
+
+    // builderClient();
+
+    commandClient();
   }
 
   private static void singletonClient() {
@@ -48,5 +59,25 @@ public class DesignPatterns {
   private static void observerClient() {
     WeatherPublisher weatherPublisher = new WeatherPublisher();
     WeatherSubscriber subscriber = new WeatherSubscriber(weatherPublisher);
+  }
+
+  private static void builderClient() {
+    Response.Builder builder = Response.Builder.getBuilder();
+    Response response = builder.setLikelihood(0.05f)
+        .setNextValue(5).setWhatToSay("You rock!").build();
+    System.out.println(response.getWhatToSay());
+  }
+
+  private static void commandClient() {
+    Light light = new Light();
+    LightOnCommand turnOnLightCommand = new LightOnCommand(light);
+    Stereo stereo = new Stereo();
+    StereoOnCommand stereoOnCommand = new StereoOnCommand(stereo);
+
+    turnOnLightCommand.execute();
+    stereoOnCommand.execute();
+
+    MacroCommand macroCommand = new MacroCommand(new Command[] { turnOnLightCommand, stereoOnCommand });
+    macroCommand.undo();
   }
 }
